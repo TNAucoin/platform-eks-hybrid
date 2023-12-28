@@ -27,7 +27,7 @@ jobs:
         run: yarn install && cdk8s synth
       - run: |
           mkdir -p destination/dev
-          cp -rv src/cdk8s/dist/*.yaml destination/dev
+          cp -rv src/cdk8s/dist/*.yaml manifests/dev
       - working-directory: manifests
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"

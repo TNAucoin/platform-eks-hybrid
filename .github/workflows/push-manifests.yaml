@@ -19,6 +19,7 @@ jobs:
           path: manifests
           repository: tnaucoin/platform-eks-hybrid-manifests
           token: ${{ secrets.MANIFESTS_TOKEN }}
+          branch: main
           fetch-depth: 0
           persist-credentials: true
       - run: yarn global add cdk8s-cli
@@ -26,7 +27,7 @@ jobs:
         run: yarn install && cdk8s synth
       - run: |
           mkdir -p destination/dev
-          cp -rv src/cdk8s/*.yaml destination/dev
+          cp -rv src/cdk8s/dist/*.yaml destination/dev
       - working-directory: manifests
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"

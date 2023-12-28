@@ -23,7 +23,7 @@ jobs:
           persist-credentials: true
       - run: yarn global add cdk8s-cli
       - working-directory: src/cdk8s
-        run: cdk8s synth
+        run: yarn install && cdk8s synth
       - run: |
           mkdir -p destination/dev
           cp -rv src/cdk8s/*.yaml destination/dev

@@ -24,7 +24,7 @@ jobs:
           persist-credentials: true
       - run: yarn global add cdk8s-cli
       - working-directory: src/cdk8s
-        run: yarn install && cdk8s synth
+        run: yarn install && cdk8s import && cdk8s synth
       - run: |
           mkdir -p manifests/dev
           cp -rv src/cdk8s/dist/*.yaml manifests/dev
@@ -33,4 +33,5 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git commit --allow-empty -am "Update manifests"
+          git status
           git push

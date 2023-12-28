@@ -1,0 +1,8 @@
+.idea
+.DS_STORE
+/**/.env
+*.d.ts
+*.js
+!jest.config.js
+/**/node_modules
+/**/dist/

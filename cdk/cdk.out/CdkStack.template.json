@@ -1,0 +1,166 @@
+{
+ "Resources": {
+  "TableCD117FA1": {
+   "Type": "AWS::DynamoDB::GlobalTable",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "shortcode",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "KeySchema": [
+     {
+      "AttributeName": "shortcode",
+      "KeyType": "HASH"
+     }
+    ],
+    "Replicas": [
+     {
+      "Region": "us-east-2"
+     }
+    ],
+    "TableName": "urls"
+   },
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "CdkStack/Table/Resource"
+   }
+  },
+  "DDBServiceRole6D84E942": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRoleWithWebIdentity",
+       "Condition": {
+        "StringEquals": {
+         "oidc.eks.us-east-2.amazonaws.com/id/95518735024BC375963F47A88480D9BD:aud": "sts.amazonaws.com"
+        },
+        "ForAnyValue:StringLike": {
+         "oidc.eks.us-east-2.amazonaws.com/id/95518735024BC375963F47A88480D9BD:sub": "system:serviceaccount:hybrid:eks-dynamodb-app-sa"
+        }
+       },
+       "Effect": "Allow",
+       "Principal": {
+        "Federated": "arn:aws:iam::${AWS_ACCOUNT_ID}:oidc-provider/oidc.eks.us-east-2.amazonaws.com/id/95518735024BC375963F47A88480D9BD"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "Description": "DDB Service Role for IRSA",
+    "RoleName": "DDBServiceRole",
+    "Tags": [
+     {
+      "Key": "Application",
+      "Value": "platform-eks-hybrid"
+     },
+     {
+      "Key": "Environment",
+      "Value": "Dev"
+     },
+     {
+      "Key": "Name",
+      "Value": "platform-eks-hybrid"
+     },
+     {
+      "Key": "Team",
+      "Value": "Platform"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkStack/DDBServiceRole/Resource"
+   }
+  },
+  "DDBServiceRoleDefaultPolicy423C8EBA": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "TableCD117FA1",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "DDBServiceRoleDefaultPolicy423C8EBA",
+    "Roles": [
+     {
+      "Ref": "DDBServiceRole6D84E942"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkStack/DDBServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/y2Kyw7CIBREv6V7uEoTo3sXbg01bs3lYUIL3KS0mobw77bF1Zw5My0IcYJjg9/EtRm4dwpyN6Ee2Kpe2SwRA5lVPlB5+2zZ9R1vnhT6XRTmMECW5O227Hkn7/Sy1UqlMGkTzaOunz8XFslY6NPhIy4gziCaPjnHxzlOLliQNX8JMHBHogAAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "CdkStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

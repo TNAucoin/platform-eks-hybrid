@@ -1,0 +1,120 @@
+{
+  "version": "35.0.0",
+  "artifacts": {
+    "CdkStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CdkStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CdkStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://113191093292/us-east-2",
+      "properties": {
+        "templateFile": "CdkStack.template.json",
+        "terminationProtection": false,
+        "tags": {
+          "Application": "platform-eks-hybrid",
+          "Environment": "Dev",
+          "Name": "platform-eks-hybrid",
+          "Team": "Platform"
+        },
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::113191093292:role/cdk-hnb659fds-deploy-role-113191093292-us-east-2",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::113191093292:role/cdk-hnb659fds-cfn-exec-role-113191093292-us-east-2",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-113191093292-us-east-2/3c8cf381a2dabdda5d803291ae888f85d13cef7ce7b9121a5ee2a78147675752.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CdkStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::113191093292:role/cdk-hnb659fds-lookup-role-113191093292-us-east-2",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CdkStack.assets"
+      ],
+      "metadata": {
+        "/CdkStack": [
+          {
+            "type": "aws:cdk:stack-tags",
+            "data": [
+              {
+                "Key": "Application",
+                "Value": "platform-eks-hybrid"
+              },
+              {
+                "Key": "Environment",
+                "Value": "Dev"
+              },
+              {
+                "Key": "Name",
+                "Value": "platform-eks-hybrid"
+              },
+              {
+                "Key": "Team",
+                "Value": "Platform"
+              }
+            ]
+          }
+        ],
+        "/CdkStack/Table": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "TableCD117FA1"
+            }
+          }
+        ],
+        "/CdkStack/Table/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "TableCD117FA1"
+          }
+        ],
+        "/CdkStack/DDBServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DDBServiceRole6D84E942"
+          }
+        ],
+        "/CdkStack/DDBServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DDBServiceRoleDefaultPolicy423C8EBA"
+          }
+        ],
+        "/CdkStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CdkStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CdkStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CdkStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

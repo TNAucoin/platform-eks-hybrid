@@ -26,7 +26,7 @@ jobs:
       - working-directory: src/cdk8s
         run: yarn install && cdk8s synth
       - run: |
-          mkdir -p destination/dev
+          mkdir -p manifests/dev
           cp -rv src/cdk8s/dist/*.yaml manifests/dev
       - working-directory: manifests
         run: |

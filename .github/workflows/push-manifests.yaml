@@ -1,0 +1,34 @@
+name: Push manifests to manifests repo
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'cdk8s/**'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: src
+          persist-credentials: false
+      - uses: actions/checkout@v3
+        with:
+          path: manifests
+          repository: tnaucoin/platform-eks-hybrid-manifests
+          token: ${{ secrets.MANIFESTS_TOKEN }}
+          fetch-depth: 0
+          persist-credentials: true
+      - run: yarn global add cdk8s-cli
+      - working-directory: src/cdk8s
+        run: cdk8s synth
+      - run: |
+          mkdir -p destination/dev
+          cp -rv src/cdk8s/*.yaml destination/dev
+      - working-directory: destination
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git commit --allow-empty -am "Update manifests"
+          git push

@@ -64,7 +64,7 @@ export class NewDeploymentChart extends Chart {
         name: 'platform-app-deployment-dynamodb',
         namespace: namespaceName
       },
-      replicas: 1,
+      replicas: 2,
       serviceAccount: cplus.ServiceAccount.fromServiceAccountName(this, 'aws-irsa', SERVICE_ACCOUNT_NAME, {
         namespaceName: namespaceName
       }),

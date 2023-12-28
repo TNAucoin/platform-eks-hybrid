@@ -14,7 +14,7 @@ const fieldExportNameForTable = "export-dynamodb-tablename";
 const fieldExportNameForRegion = "export-dynamodb-region";
 const configMapName = "export-dynamodb-urls-info";
 
-const namespaceName = "hybrid";
+const namespaceName = "platform-hybrid";
 
 export class ConfigChart extends Chart {
   public readonly cfgMap: cplus.ConfigMap;

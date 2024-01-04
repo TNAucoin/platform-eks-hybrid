@@ -73,6 +73,7 @@ export class NewDeploymentChart extends Chart {
 
     const containerOpts : cplus.ContainerProps = {
       image: DOCKER_IMAGE,
+      imagePullPolicy: cplus.ImagePullPolicy.ALWAYS,
       name: 'platform-hybrid-container-dynamodb',
       ports: [{number: appPort}],
       resources: {

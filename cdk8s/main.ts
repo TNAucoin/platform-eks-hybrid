@@ -71,6 +71,15 @@ export class NewDeploymentChart extends Chart {
       automountServiceAccountToken: true,
     });
 
+    new cplus.HorizontalPodAutoscaler(this, 'platform-app-hpa-dynamodb', {
+      target: dep,
+        maxReplicas: 10,
+      metrics: [
+          cplus.Metric.resourceCpu(cplus.MetricTarget.averageUtilization(70)),
+            cplus.Metric.resourceMemory(cplus.MetricTarget.averageUtilization(70)),
+          ],
+    });
+
     const containerOpts : cplus.ContainerProps = {
       image: DOCKER_IMAGE,
       imagePullPolicy: cplus.ImagePullPolicy.ALWAYS,

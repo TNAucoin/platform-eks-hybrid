@@ -82,7 +82,7 @@ export class NewDeploymentChart extends Chart {
             metrics: [
                 kplus.Metric.pods({
                     name: 'requests-per-second',
-                    target: kplus.MetricTarget.averageUtilization(70),
+                    target: kplus.MetricTarget.averageValue(70),
 
                     labelSelector: kplus.LabelSelector.of({labels: {app: 'platform-app-dynamodb'}})
                 }),

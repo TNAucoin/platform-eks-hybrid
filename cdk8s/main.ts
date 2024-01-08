@@ -1,5 +1,6 @@
 import {Construct} from 'constructs';
 import {ApiObject, App, Chart, ChartProps, Size} from 'cdk8s';
+import * as k from 'cdk8s';
 import * as kplus from "cdk8s-plus-27";
 
 // Define chart constants
@@ -83,6 +84,16 @@ export class NewDeploymentChart extends Chart {
                 kplus.Metric.resourceCpu(kplus.MetricTarget.averageUtilization(50)),
               kplus.Metric.resourceMemory(kplus.MetricTarget.averageUtilization(50))
             ],
+            scaleDown: {
+                stabilizationWindow: k.Duration.seconds(30),
+                strategy: kplus.ScalingStrategy.MAX_CHANGE,
+                policies: [
+                    {
+                        replicas: kplus.Replicas.absolute(1),
+                        duration: k.Duration.seconds(30)
+                    }
+                ]
+            }
         });
 
         const containerOpts: kplus.ContainerProps = {

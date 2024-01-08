@@ -80,7 +80,8 @@ export class NewDeploymentChart extends Chart {
             target: dep,
             maxReplicas: 10,
             metrics: [
-              kplus.Metric.resourceMemory(kplus.MetricTarget.averageUtilization(70))
+                kplus.Metric.resourceCpu(kplus.MetricTarget.averageUtilization(50)),
+              kplus.Metric.resourceMemory(kplus.MetricTarget.averageUtilization(50))
             ],
         });
 

@@ -71,6 +71,9 @@ export class NewDeploymentChart extends Chart {
     });
 
     new cplus.HorizontalPodAutoscaler(this, 'platform-app-hpa-dynamodb', {
+      metadata: {
+        namespace: namespaceName,
+      },
       target: dep,
         maxReplicas: 10,
       metrics: [

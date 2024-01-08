@@ -96,8 +96,8 @@ export class NewDeploymentChart extends Chart {
                     limit: kplus.Cpu.millis(500),
                 },
                 memory: {
-                    request: Size.mebibytes(64),
-                    limit: Size.mebibytes(128),
+                    request: Size.mebibytes(128),
+                    limit: Size.mebibytes(256),
                 }
             },
             securityContext: {

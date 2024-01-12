@@ -1,6 +1,5 @@
 import {Construct} from 'constructs';
 import {ApiObject, App, Chart, ChartProps, Size} from 'cdk8s';
-import * as k from 'cdk8s';
 import * as kplus from "cdk8s-plus-27";
 
 // Define chart constants

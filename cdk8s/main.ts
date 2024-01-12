@@ -68,33 +68,14 @@ export class NewDeploymentChart extends Chart {
                 name: 'platform-app-deployment-dynamodb',
                 namespace: namespaceName
             },
+            replicas: 3,
             serviceAccount: kplus.ServiceAccount.fromServiceAccountName(this, 'aws-irsa', SERVICE_ACCOUNT_NAME, {
                 namespaceName: namespaceName
             }),
             automountServiceAccountToken: true,
         });
 
-        new kplus.HorizontalPodAutoscaler(this, 'platform-app-hpa-dynamodb', {
-            metadata: {
-                namespace: namespaceName,
-            },
-            target: dep,
-            maxReplicas: 5,
-            metrics: [
-                kplus.Metric.resourceCpu(kplus.MetricTarget.averageUtilization(50)),
-              kplus.Metric.resourceMemory(kplus.MetricTarget.averageUtilization(50))
-            ],
-            scaleDown: {
-                stabilizationWindow: k.Duration.seconds(30),
-                strategy: kplus.ScalingStrategy.MAX_CHANGE,
-                policies: [
-                    {
-                        replicas: kplus.Replicas.absolute(1),
-                        duration: k.Duration.seconds(30)
-                    }
-                ]
-            }
-        });
+
 
         const containerOpts: kplus.ContainerProps = {
             image: DOCKER_IMAGE,
